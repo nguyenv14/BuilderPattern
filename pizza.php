@@ -9,8 +9,9 @@ class Pizza
   public $beef;
   public $mushroom;
   public $seafood;
+  public $note;
 
-  public function __construct($size, $cheese, $pepperoni, $beef, $mushroom, $seafood)
+  public function __construct($size, $cheese, $pepperoni, $beef, $mushroom, $seafood, $note = "")
   {
     $this->size = $size;
     $this->cheese = $cheese;
@@ -18,11 +19,12 @@ class Pizza
     $this->beef = $beef;
     $this->mushroom = $mushroom;
     $this->seafood = $seafood;
+    $this->note = $note;
   }
 
   public function display()
   {
-    echo "Pizza Size: " . $this->size . "\n";
+    echo "\n" . "Pizza Size: " . $this->size . "\n";
     echo "Toppings:\n";
     if ($this->cheese) echo "- Cheese\n";
     if ($this->pepperoni) echo "- Pepperoni\n";
@@ -41,6 +43,7 @@ class PizzaBuilder
   private $beef = false;
   private $mushroom = false;
   private $seafood = false;
+  private $note = "";
 
   public function __construct($size)
   {
@@ -76,10 +79,14 @@ class PizzaBuilder
     $this->seafood = true;
     return $this;
   }
+  public function addNote($note)
+  {
+    $this->note = $note;
+    return $this;
+  }
 
   public function build()
   {
-    return new Pizza($this->size, $this->cheese, $this->pepperoni, $this->beef, $this->mushroom, $this->seafood);
+    return new Pizza($this->size, $this->cheese, $this->pepperoni, $this->beef, $this->mushroom, $this->seafood, $this->note);
   }
 }
-
