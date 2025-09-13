@@ -90,3 +90,55 @@ class PizzaBuilder
     return new Pizza($this->size, $this->cheese, $this->pepperoni, $this->beef, $this->mushroom, $this->seafood, $this->note);
   }
 }
+
+class PizzaDirector
+{
+  private $builder;
+
+  public function __construct(PizzaBuilder $builder)
+  {
+    $this->builder = $builder;
+  }
+
+  public function makeMargherita()
+  {
+    return $this->builder->addCheese()->build();
+  }
+
+  public function makePepperoniPizza()
+  {
+    return $this->builder->addCheese()->addPepperoni()->build();
+  }
+
+  public function makeSupremePizza()
+  {
+    return $this->builder->addCheese()->addPepperoni()->addBeef()->addMushroom()->addSeafood()->build();
+  }
+
+  public function makeCustomPizza($toppings = [], $note = "")
+  {
+    foreach ($toppings as $topping) {
+      switch ($topping) {
+        case 'cheese':
+          $this->builder->addCheese();
+          break;
+        case 'pepperoni':
+          $this->builder->addPepperoni();
+          break;
+        case 'beef':
+          $this->builder->addBeef();
+          break;
+        case 'mushroom':
+          $this->builder->addMushroom();
+          break;
+        case 'seafood':
+          $this->builder->addSeafood();
+          break;
+      }
+    }
+    if ($note) {
+      $this->builder->addNote($note);
+    }
+    return $this->builder->build();
+  }
+}
